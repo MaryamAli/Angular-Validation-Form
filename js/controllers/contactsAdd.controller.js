@@ -2,7 +2,7 @@ let ContactsAddController = function(ContactService, $state, $scope) {
   
   let vm =this;
 
-  vm.title = 'Add all the facts you\'d like:';
+  vm.title = 'Add as many facts as you\'d like:';
 
   vm.addContact = addContact;
 
