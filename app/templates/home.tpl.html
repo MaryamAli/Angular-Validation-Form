@@ -4,10 +4,10 @@
 <a href="#/add"><button>(Start here!)</button></a>
 
 <div class='factsArea'>
-  <div class='factTiles' ng-repeat='fact in facts'>
-    <a href="#/singleFact/{{ fact.id }}">
+  <div class='factTiles' ng-repeat='msg in msgs'>
+    <a href="#/singleFact/{{ msg.id }}">
       <button class='fact-button' ng-model='facts'>
-        {{ fact.msg}}
+        {{ contactObj.msg}}
       </button>
     </a>
   </div>
