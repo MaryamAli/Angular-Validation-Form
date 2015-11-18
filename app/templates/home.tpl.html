@@ -2,3 +2,13 @@
 <h3>{{ vm.title }}</h3>
 
 <a href="#/add"><button>(Start here!)</button></a>
+
+<div class='factsArea'>
+  <div class='factTiles' ng-repeat='fact in facts'>
+    <a href="#/singleFact/{{ fact.id }}">
+      <button class='fact-button' ng-model='facts'>
+        {{ fact.msg}}
+      </button>
+    </a>
+  </div>
+</div>
