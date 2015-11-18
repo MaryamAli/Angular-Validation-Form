@@ -1,7 +1,7 @@
 let AboutController = function () {
 
   let vm = this;
-  vm.title = 'About';
+  vm.title = 'The world is now a smarter place!';
 };
 
 AboutController.$inject = [];

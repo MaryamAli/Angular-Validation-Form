@@ -1,10 +1,22 @@
-let Homecontroller = function () {
+let HomeController = function (ContactService, $scope) {
+
+  // console.log(PARSE);
 
   let vm = this;
-  vm.title ='Home Page';
+
+  vm.title ='Ready to add some Snapple Facts?';
+
+  vm.getAll = getAll();
+
+  function getAll () {
+    ContactService.getAllContacts().then( (response) => {
+      vm.allContacts = response.data.results;
+      console.log(vm.allContacts);
+    });
+  }
 
 };
 
-Homecontroller.$inject = [];
+HomeController.$inject = ['ContactService', '$scope'];
 
-export default Homecontroller;
+export default HomeController;

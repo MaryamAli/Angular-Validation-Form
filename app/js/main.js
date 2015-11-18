@@ -16,6 +16,10 @@ var config = function config($stateProvider, $urlRouterProvider) {
     url: '/',
     controller: 'HomeController as vm',
     templateUrl: 'templates/home.tpl.html'
+  }).state('root.contactsAdd', {
+    url: '/add',
+    controller: 'ContactsAddController as vm',
+    templateUrl: 'templates/contactsAdd.tpl.html'
   }).state('root.about', {
     url: '/about',
     controller: 'AboutController as vm',
@@ -34,15 +38,15 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var AboutController = function AboutController() {
-
-  var vm = this;
-  vm.title = 'About';
+exports['default'] = {
+  URL: 'https://api.parse.com/1/',
+  CONFIG: {
+    headers: {
+      'X-Parse-Application-Id': '0JqHyVy0Vk5GKstWwrXlwyScnlmhTCtCngCCZ9nE',
+      'X-Parse-REST-API-Key': 'ryUsnb1FHuFJX3kVxIhVHZp7EZ3dp5edO1dqVqLL'
+    }
+  }
 };
-
-AboutController.$inject = [];
-
-exports['default'] = AboutController;
 module.exports = exports['default'];
 
 },{}],3:[function(require,module,exports){
@@ -51,18 +55,138 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var Homecontroller = function Homecontroller() {
+var AboutController = function AboutController() {
 
   var vm = this;
-  vm.title = 'Home Page';
+  vm.title = 'The world is now a smarter place!';
 };
 
-Homecontroller.$inject = [];
+AboutController.$inject = [];
 
-exports['default'] = Homecontroller;
+exports['default'] = AboutController;
 module.exports = exports['default'];
 
 },{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var ContactsAddController = function ContactsAddController(ContactService, $state, $scope) {
+
+  var vm = this;
+
+  vm.title = 'Add all the facts you\'d like:';
+
+  vm.addContact = addContact;
+
+  function addContact(contactObj) {
+    ContactService.addContact(contactObj).then(function (response) {
+      console.log(response);
+    });
+    $state.go('root.about');
+  }
+
+  // Validate Name Entry
+  var valName = function valName(firstAndLastName) {
+    if (firstAndLastName.length <= 1) {
+      $scope.ErrName = 'Please enter your first AND last name';
+    } else {
+      $scope.ErrName = 'Thanks';
+    }
+  };
+
+  $scope.$watch('contactObj.firstAndLastName', function (firstAndLastName) {
+    if (!firstAndLastName) return;
+    valName(firstAndLastName);
+  });
+
+  // Validate Email Entry
+
+  var valEmail = function valEmail(email) {
+    var emailCorrect = email.indexOf('@');
+    if (emailCorrect <= 0) {
+      $scope.ErrEmail = 'Please enter a valid email address';
+    } else {
+      $scope.ErrEmail = 'Half-way there';
+    }
+  };
+
+  $scope.$watch('contactObj.email', function (email) {
+    if (!email) return;
+    valEmail(email);
+  });
+
+  // Validate Website Entry
+
+  var valWeb = function valWeb(httpWeb) {
+    var okFirst = httpWeb.indexOf('http://');
+    var okTwo = httpWeb.indexOf('https://');
+    if (okFirst < 0 && okTwo < 0) {
+      $scope.ErrWeb = 'Please include a site beginning with http:// or https://';
+    } else {
+      $scope.ErrWeb = 'Almost done!';
+    }
+  };
+
+  $scope.$watch('contactObj.httpWeb', function (httpWeb) {
+    if (!httpWeb) return;
+    valWeb(httpWeb);
+  });
+
+  // Validate Message Entry
+
+  var valMsg = function valMsg(msg) {
+    if (msg.length <= 1) {
+      $scope.ErrMsg = 'Pleaes take the time to add a few thoughts';
+    } else {
+      $scope.ErrMsg = 'Yay! You\'re done';
+    }
+  };
+
+  $scope.$watch('contactObj.msg', function (msg) {
+    if (!msg) return;
+    valMsg(msg);
+  });
+
+  // $scope.$watch(contactObj.firstAndLastName, function ())
+};
+
+ContactsAddController.$inject = ['ContactService', '$state', '$scope'];
+
+exports['default'] = ContactsAddController;
+module.exports = exports['default'];
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var HomeController = function HomeController(ContactService, $scope) {
+
+  // console.log(PARSE);
+
+  var vm = this;
+
+  vm.title = 'Ready to add some Snapple Facts?';
+
+  vm.getAll = getAll();
+
+  function getAll() {
+    ContactService.getAllContacts().then(function (response) {
+      vm.allContacts = response.data.results;
+      console.log(vm.allContacts);
+    });
+  }
+};
+
+HomeController.$inject = ['ContactService', '$scope'];
+
+exports['default'] = HomeController;
+module.exports = exports['default'];
+
+},{}],6:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -85,11 +209,58 @@ var _controllersAboutController = require('./controllers/about.controller');
 
 var _controllersAboutController2 = _interopRequireDefault(_controllersAboutController);
 
-_angular2['default'].module('app', ['ui.router']).config(_config2['default']).controller('HomeController', _controllersHomeController2['default']).controller('AboutController', _controllersAboutController2['default']);
+var _controllersContactsAddController = require('./controllers/contactsAdd.controller');
+
+var _controllersContactsAddController2 = _interopRequireDefault(_controllersContactsAddController);
+
+var _constantsParseConstant = require('./constants/parse.constant');
+
+var _constantsParseConstant2 = _interopRequireDefault(_constantsParseConstant);
+
+var _servicesContactService = require('./services/contact.service');
+
+var _servicesContactService2 = _interopRequireDefault(_servicesContactService);
+
+_angular2['default'].module('app', ['ui.router']).config(_config2['default']).constant('PARSE', _constantsParseConstant2['default']).controller('HomeController', _controllersHomeController2['default']).controller('AboutController', _controllersAboutController2['default']).controller('ContactsAddController', _controllersContactsAddController2['default']).service('ContactService', _servicesContactService2['default']);
 
 console.log('Hello, World');
 
-},{"./config":1,"./controllers/about.controller":2,"./controllers/home.controller":3,"angular":7,"angular-ui-router":5}],5:[function(require,module,exports){
+},{"./config":1,"./constants/parse.constant":2,"./controllers/about.controller":3,"./controllers/contactsAdd.controller":4,"./controllers/home.controller":5,"./services/contact.service":7,"angular":10,"angular-ui-router":8}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var ContactService = function ContactService($http, PARSE) {
+
+  var url = PARSE.URL + 'classes/contact';
+
+  this.getAllContacts = getAllContacts;
+  this.addContact = addContact;
+
+  function Contact(contactObj) {
+    this.name = contactObj.name;
+    this.email = contactObj.email;
+    this.website = contactObj.website;
+    this.msg = contactObj.msg;
+  }
+
+  function getAllContacts() {
+    return $http.get(url, PARSE.CONFIG);
+  }
+
+  function addContact(contactObj) {
+    var c = new Contact(contactObj);
+    return $http.post(url, c, PARSE.CONFIG);
+  }
+};
+
+ContactService.$inject = ['$http', 'PARSE'];
+
+exports['default'] = ContactService;
+module.exports = exports['default'];
+
+},{}],8:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4460,7 +4631,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],6:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33365,11 +33536,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],7:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":6}]},{},[4])
+},{"./angular":9}]},{},[6])
 
 
 //# sourceMappingURL=main.js.map

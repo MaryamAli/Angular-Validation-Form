@@ -1,0 +1,19 @@
+<h3>{{ vm.title }}</h3>
+
+<form ng-submit='vm.addContact(contactObj)'>
+  
+  <h6>Name</h6>
+  <input placeholder='First and Last Name' ng-model='contactObj.firstAndLastName'>
+  <p>{{ ErrName}}</p>
+  <h6>Email</h6>
+  <input placeholder='example@example.com' ng-model='contactObj.email'>
+  <p>{{ ErrEmail }}</p>
+  <h6>Website</h6>
+  <input placeholder='http://example.com' ng-model='contactObj.httpWeb'>
+  <p>{{ ErrWeb }}</p>
+  <h6>Snapple Fact: </h6>
+  <textarea rows='5'cols='30' placeholder='Add A Snapple Fact...' ng-model='contactObj.msg'></textarea>
+  <p>{{ ErrMsg }}</p>
+  <button>Submit</button>
+
+</form>
