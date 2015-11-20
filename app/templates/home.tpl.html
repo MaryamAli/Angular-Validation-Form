@@ -1,14 +1,17 @@
+<h3>Here is some trivia, courtesy of Snapple:</h3>
+      <hr>
+
+<div class="factsArea">
+  <ul class="homeTemplate" ng-repeat='contactObj in vm.allContacts'>
+      <li><i class="fa fa-user"></i>  {{ contactObj.name}}</li>
+      <li><i class="fa fa-envelope-o"></i>  {{ contactObj.email}}</li>
+      <li><i class="fa fa-home"></i>  {{ contactObj.website}}</li>
+      <li><i class="fa fa-lightbulb-o"></i>  {{ contactObj.msg}}</li>
+  </ul>
+  <hr>
+</div>
 
 <h3>{{ vm.title }}</h3>
 
 <a href="#/add"><button>(Start here!)</button></a>
 
-<div class='factsArea'>
-  <div class='factTiles' ng-repeat='msg in msgs'>
-    <a href="#/singleFact/{{ msg.id }}">
-      <button class='fact-button' ng-model='facts'>
-        {{ contactObj.msg}}
-      </button>
-    </a>
-  </div>
-</div>
