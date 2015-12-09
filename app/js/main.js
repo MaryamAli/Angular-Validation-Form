@@ -96,7 +96,7 @@ var ContactsAddController = function ContactsAddController(ContactService, $stat
     }
   };
 
-  $scope.$watch('contactObj.firstAndLastName', function (firstAndLastName) {
+  $scope.$watch('contact.firstAndLastName', function (firstAndLastName) {
     if (!firstAndLastName) return;
     valName(firstAndLastName);
   });
@@ -112,7 +112,7 @@ var ContactsAddController = function ContactsAddController(ContactService, $stat
     }
   };
 
-  $scope.$watch('contactObj.email', function (email) {
+  $scope.$watch('contact.email', function (email) {
     if (!email) return;
     valEmail(email);
   });
@@ -129,7 +129,7 @@ var ContactsAddController = function ContactsAddController(ContactService, $stat
     }
   };
 
-  $scope.$watch('contactObj.httpWeb', function (httpWeb) {
+  $scope.$watch('contact.httpWeb', function (httpWeb) {
     if (!httpWeb) return;
     valWeb(httpWeb);
   });
@@ -144,7 +144,7 @@ var ContactsAddController = function ContactsAddController(ContactService, $stat
     }
   };
 
-  $scope.$watch('contactObj.msg', function (msg) {
+  $scope.$watch('contact.msg', function (msg) {
     if (!msg) return;
     valMsg(msg);
   });
@@ -171,16 +171,22 @@ var HomeController = function HomeController(ContactService, $scope) {
 
   vm.title = 'Ready to add some Snapple Facts?';
 
-  vm.getAll = getAll();
+  //   vm.getAll = getAll();
 
-  function getAll() {
-    ContactService.getAllContacts().then(function (response) {
-      vm.allContacts = response.data.results;
-      console.log(vm.allContacts);
-    });
-  }
+  //   function getAll () {
+  //     ContactService.getAllContacts().then( (response) => {
+  //       vm.allContacts = response.data.results;
+  //       console.log(vm.allContacts);
+  //     });
+  //   }
+
+  // };
+  ContactService.getAllContacts().then(function (response) {
+    vm.contacts = response.data.results;
+    console.log(vm.contacts);
+    return vm.contacts;
+  });
 };
-
 HomeController.$inject = ['ContactService', '$scope'];
 
 exports['default'] = HomeController;
@@ -238,12 +244,12 @@ var ContactService = function ContactService($http, PARSE) {
   this.getAllContacts = getAllContacts;
   this.addContact = addContact;
 
-  function Contact(contactObj) {
+  var Contact = function Contact(contactObj) {
     this.name = contactObj.name;
     this.email = contactObj.email;
     this.website = contactObj.website;
     this.msg = contactObj.msg;
-  }
+  };
 
   function getAllContacts() {
     return $http.get(url, PARSE.CONFIG);

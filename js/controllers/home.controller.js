@@ -6,17 +6,23 @@ let HomeController = function (ContactService, $scope) {
 
   vm.title ='Ready to add some Snapple Facts?';
 
-  vm.getAll = getAll();
+//   vm.getAll = getAll();
 
-  function getAll () {
-    ContactService.getAllContacts().then( (response) => {
-      vm.allContacts = response.data.results;
-      console.log(vm.allContacts);
-    });
-  }
+//   function getAll () {
+//     ContactService.getAllContacts().then( (response) => {
+//       vm.allContacts = response.data.results;
+//       console.log(vm.allContacts);
+//     });
+//   }
+
+// };
+  ContactService.getAllContacts().then((response) =>{
+    vm.contacts = response.data.results;
+    console.log(vm.contacts);
+    return vm.contacts;
+  });
 
 };
-
 HomeController.$inject = ['ContactService', '$scope'];
 
 export default HomeController;

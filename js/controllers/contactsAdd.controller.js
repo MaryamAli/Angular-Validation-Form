@@ -22,7 +22,7 @@ let ContactsAddController = function(ContactService, $state, $scope) {
     }
   };
 
-  $scope.$watch('contactObj.firstAndLastName', function (firstAndLastName) {
+  $scope.$watch('contact.firstAndLastName', function (firstAndLastName) {
     if (!firstAndLastName) return;
     valName(firstAndLastName);
   });
@@ -38,7 +38,7 @@ let ContactsAddController = function(ContactService, $state, $scope) {
     }
   };
 
-  $scope.$watch('contactObj.email', function (email) {
+  $scope.$watch('contact.email', function (email) {
     if (!email) return;
     valEmail(email);
   });
@@ -55,7 +55,7 @@ let ContactsAddController = function(ContactService, $state, $scope) {
     }
   };
 
-   $scope.$watch('contactObj.httpWeb', function (httpWeb) {
+   $scope.$watch('contact.httpWeb', function (httpWeb) {
     if (!httpWeb) return;
     valWeb(httpWeb);
   });
@@ -70,7 +70,7 @@ let ContactsAddController = function(ContactService, $state, $scope) {
     }
   };
 
-   $scope.$watch('contactObj.msg', function (msg) {
+   $scope.$watch('contact.msg', function (msg) {
       if (!msg) return;
       valMsg(msg);
     });

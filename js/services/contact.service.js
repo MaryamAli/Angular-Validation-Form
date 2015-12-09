@@ -5,13 +5,14 @@ let ContactService = function ($http, PARSE) {
   this.getAllContacts = getAllContacts;
   this.addContact = addContact;
 
-  function Contact (contactObj) {
+
+  let Contact = function (contactObj) {
     this.name = contactObj.name;
     this.email = contactObj.email;
     this.website = contactObj.website;
     this.msg = contactObj.msg;
 
-  }
+  };
 
   function getAllContacts () {
     return $http.get(url, PARSE.CONFIG);
