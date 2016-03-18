@@ -3,6 +3,7 @@ import 'angular-ui-router';
 
 import config from './config';
 
+//controllers
 import HomeController from './controllers/home.controller';
 import AboutController from './controllers/about.controller';
 import ContactsAddController from './controllers/contactsAdd.controller';

@@ -2,11 +2,12 @@
       <hr>
 
 <div class="factsArea">
-  <ul class="homeTemplate" ng-repeat='contactObj in vm.allContacts'>
+  <ul class="homeTemplate" ng-repeat='contactObj in vm.contacts'>
+      <li><i class="fa fa-lightbulb-o"></i>  {{ contactObj.msg}}</li>
       <li><i class="fa fa-user"></i>  {{ contactObj.name}}</li>
       <li><i class="fa fa-envelope-o"></i>  {{ contactObj.email}}</li>
       <li><i class="fa fa-home"></i>  {{ contactObj.website}}</li>
-      <li><i class="fa fa-lightbulb-o"></i>  {{ contactObj.msg}}</li>
+      
   </ul>
   <hr>
 </div>

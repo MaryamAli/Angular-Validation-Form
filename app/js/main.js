@@ -81,24 +81,24 @@ var ContactsAddController = function ContactsAddController(ContactService, $stat
   vm.addContact = addContact;
 
   function addContact(contactObj) {
-    ContactService.addContact(contactObj).then(function (response) {
-      console.log(response);
+    ContactService.addContact(contactObj).then(function (res) {
+      console.log(res);
+      $state.go('root.about');
     });
-    $state.go('root.about');
   }
 
   // Validate Name Entry
   var valName = function valName(firstAndLastName) {
     if (firstAndLastName.length <= 1) {
-      $scope.ErrName = 'Please enter your first AND last name';
+      $scope.ErrMsg = 'Please enter your first AND last name';
     } else {
-      $scope.ErrName = 'Thanks';
+      $scope.ErrMsg = 'Thanks';
     }
   };
 
-  $scope.$watch('contact.firstAndLastName', function (firstAndLastName) {
-    if (!firstAndLastName) return;
-    valName(firstAndLastName);
+  $scope.$watch('contactObj.firstAndLastName', function (newVal, prevVal) {
+    if (!newVal) return;
+    valName(newVal);
   });
 
   // Validate Email Entry
@@ -106,9 +106,9 @@ var ContactsAddController = function ContactsAddController(ContactService, $stat
   var valEmail = function valEmail(email) {
     var emailCorrect = email.indexOf('@');
     if (emailCorrect <= 0) {
-      $scope.ErrEmail = 'Please enter a valid email address';
+      $scope.ErrMsg = 'Please enter a valid email address';
     } else {
-      $scope.ErrEmail = 'Half-way there';
+      $scope.ErrMsg = 'Half-way there';
     }
   };
 
@@ -123,9 +123,9 @@ var ContactsAddController = function ContactsAddController(ContactService, $stat
     var okFirst = httpWeb.indexOf('http://');
     var okTwo = httpWeb.indexOf('https://');
     if (okFirst < 0 && okTwo < 0) {
-      $scope.ErrWeb = 'Please include a site beginning with http:// or https://';
+      $scope.ErrMsg = 'Please include a site beginning with http:// or https://';
     } else {
-      $scope.ErrWeb = 'Almost done!';
+      $scope.ErrMsg = 'Almost done!';
     }
   };
 
@@ -138,7 +138,7 @@ var ContactsAddController = function ContactsAddController(ContactService, $stat
 
   var valMsg = function valMsg(msg) {
     if (msg.length <= 1) {
-      $scope.ErrMsg = 'Pleaes take the time to add a few thoughts';
+      $scope.ErrMsg = 'Please take the time to add a few thoughts';
     } else {
       $scope.ErrMsg = 'Yay! You\'re done';
     }
@@ -163,7 +163,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var HomeController = function HomeController(ContactService, $scope) {
+var HomeController = function HomeController(ContactService) {
 
   // console.log(PARSE);
 
@@ -187,7 +187,7 @@ var HomeController = function HomeController(ContactService, $scope) {
     return vm.contacts;
   });
 };
-HomeController.$inject = ['ContactService', '$scope'];
+HomeController.$inject = ['ContactService'];
 
 exports['default'] = HomeController;
 module.exports = exports['default'];

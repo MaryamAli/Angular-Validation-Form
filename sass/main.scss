@@ -20,3 +20,17 @@ ul {
 button {
   border-radius: 90px;
 }
+
+.add {
+	input
+	{
+	display: inline-block;
+	max-width: 50%;
+	}
+}
+
+.no-bullet {
+	span {
+		font-size: 14px;
+	}
+}

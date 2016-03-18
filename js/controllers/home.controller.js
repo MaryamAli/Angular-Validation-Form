@@ -1,4 +1,4 @@
-let HomeController = function (ContactService, $scope) {
+let HomeController = function (ContactService) {
 
   // console.log(PARSE);
 
@@ -23,6 +23,6 @@ let HomeController = function (ContactService, $scope) {
   });
 
 };
-HomeController.$inject = ['ContactService', '$scope'];
+HomeController.$inject = ['ContactService'];
 
 export default HomeController;

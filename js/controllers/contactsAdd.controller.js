@@ -7,34 +7,34 @@ let ContactsAddController = function(ContactService, $state, $scope) {
   vm.addContact = addContact;
 
   function addContact (contactObj) {
-    ContactService.addContact(contactObj).then( (response) => {
-      console.log(response);
-    });
+    ContactService.addContact(contactObj).then( (res) => {
+      console.log(res);
       $state.go('root.about');
+    });
     }
 
   // Validate Name Entry
   let valName = (firstAndLastName) => {
     if (firstAndLastName.length <= 1) {
-      $scope.ErrName = 'Please enter your first AND last name';
+      $scope.ErrMsg= 'Please enter your first AND last name';
     } else {
-      $scope.ErrName = 'Thanks';
+      $scope.ErrMsg = 'Thanks';
     }
   };
 
-  $scope.$watch('contact.firstAndLastName', function (firstAndLastName) {
-    if (!firstAndLastName) return;
-    valName(firstAndLastName);
+  $scope.$watch('contactObj.firstAndLastName', function (newVal, prevVal) {
+    if (!newVal) return;
+    valName(newVal);
   });
 
   // Validate Email Entry
 
-  let valEmail =(email) => {
+  let valEmail = (email) => {
     let emailCorrect = email.indexOf('@');
     if (emailCorrect <=0) {
-      $scope.ErrEmail = 'Please enter a valid email address';
+      $scope.ErrMsg = 'Please enter a valid email address';
     } else {
-      $scope.ErrEmail ='Half-way there';
+      $scope.ErrMsg ='Half-way there';
     }
   };
 
@@ -49,9 +49,9 @@ let ContactsAddController = function(ContactService, $state, $scope) {
     let okFirst = httpWeb.indexOf('http://');
     let okTwo = httpWeb.indexOf('https://');
     if ((okFirst < 0) && (okTwo <0)) {
-      $scope.ErrWeb = 'Please include a site beginning with http:// or https://';
+      $scope.ErrMsg = 'Please include a site beginning with http:// or https://';
     } else {
-      $scope.ErrWeb = 'Almost done!';
+      $scope.ErrMsg = 'Almost done!';
     }
   };
 
@@ -64,7 +64,7 @@ let ContactsAddController = function(ContactService, $state, $scope) {
 
   let valMsg = (msg) => {
     if (msg.length <=1) {
-      $scope.ErrMsg = 'Pleaes take the time to add a few thoughts';
+      $scope.ErrMsg = 'Please take the time to add a few thoughts';
     } else {
       $scope.ErrMsg = 'Yay! You\'re done';
     }
